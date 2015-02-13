@@ -1,0 +1,1 @@
+json.extract! @medicover_visit_query, :id, :region, :booking_type, :specialization, :clinic, :language, :doctor, :search_since, :search_for_next_since, :period_of_the_day, :set_because_of_pcc, :is_set_because_promote_specialization, :created_at, :updated_at

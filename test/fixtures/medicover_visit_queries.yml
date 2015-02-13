@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  region: 1
+  booking_type: 1
+  specialization: 1
+  clinic: 1
+  language: 1
+  doctor: 1
+  search_since: 2015-02-13 02:27:14
+  search_for_next_since: 2015-02-13 02:27:14
+  period_of_the_day: 1
+  set_because_of_pcc: false
+  is_set_because_promote_specialization: false
+
+two:
+  region: 1
+  booking_type: 1
+  specialization: 1
+  clinic: 1
+  language: 1
+  doctor: 1
+  search_since: 2015-02-13 02:27:14
+  search_for_next_since: 2015-02-13 02:27:14
+  period_of_the_day: 1
+  set_because_of_pcc: false
+  is_set_because_promote_specialization: false

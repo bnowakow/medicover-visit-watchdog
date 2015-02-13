@@ -1,0 +1,1 @@
+rails g scaffold MedicoverVisitQuery region:integer booking_type:integer specialization:integer clinic:integer language:integer doctor:integer search_since:datetime search_for_next_since:datetime period_of_the_day:integer set_because_of_pcc:boolean is_set_because_promote_specialization:boolean

@@ -1,0 +1,56 @@
+<%- model_class = MedicoverVisitQuery -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:region) %></th>
+      <th><%= model_class.human_attribute_name(:booking_type) %></th>
+      <th><%= model_class.human_attribute_name(:specialization) %></th>
+      <th><%= model_class.human_attribute_name(:clinic) %></th>
+      <th><%= model_class.human_attribute_name(:language) %></th>
+      <th><%= model_class.human_attribute_name(:doctor) %></th>
+      <th><%= model_class.human_attribute_name(:search_since) %></th>
+      <th><%= model_class.human_attribute_name(:search_for_next_since) %></th>
+      <th><%= model_class.human_attribute_name(:period_of_the_day) %></th>
+      <th><%= model_class.human_attribute_name(:set_because_of_pcc) %></th>
+      <th><%= model_class.human_attribute_name(:is_set_because_promote_specialization) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @medicover_visit_queries.each do |medicover_visit_query| %>
+      <tr>
+        <td><%= link_to medicover_visit_query.id, medicover_visit_query_path(medicover_visit_query) %></td>
+        <td><%= medicover_visit_query.region %></td>
+        <td><%= medicover_visit_query.booking_type %></td>
+        <td><%= medicover_visit_query.specialization %></td>
+        <td><%= medicover_visit_query.clinic %></td>
+        <td><%= medicover_visit_query.language %></td>
+        <td><%= medicover_visit_query.doctor %></td>
+        <td><%= medicover_visit_query.search_since %></td>
+        <td><%= medicover_visit_query.search_for_next_since %></td>
+        <td><%= medicover_visit_query.period_of_the_day %></td>
+        <td><%= medicover_visit_query.set_because_of_pcc %></td>
+        <td><%= medicover_visit_query.is_set_because_promote_specialization %></td>
+        <td><%=l medicover_visit_query.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_medicover_visit_query_path(medicover_visit_query), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      medicover_visit_query_path(medicover_visit_query),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_medicover_visit_query_path,
+            :class => 'btn btn-primary' %>

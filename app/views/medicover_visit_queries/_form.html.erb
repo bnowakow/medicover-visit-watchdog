@@ -1,0 +1,101 @@
+<%= form_for @medicover_visit_query, :html => { :class => "form-horizontal medicover_visit_query" } do |f| %>
+
+    <% if @medicover_visit_query.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@medicover_visit_query.errors.count, "error") %> prohibited this medicover_visit_query from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @medicover_visit_query.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :region, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :region, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:region]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :booking_type, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :booking_type, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:booking_type]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :specialization, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :specialization, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:specialization]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :clinic, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :clinic, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:clinic]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :language, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :language, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:language]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :doctor, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :doctor, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:doctor]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :search_since, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :search_since, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:search_since]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :search_for_next_since, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :search_for_next_since, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:search_for_next_since]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :period_of_the_day, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :period_of_the_day, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:period_of_the_day]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :set_because_of_pcc, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :set_because_of_pcc, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:set_because_of_pcc]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :is_set_because_promote_specialization, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :is_set_because_promote_specialization, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_visit_query[:is_set_because_promote_specialization]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            medicover_visit_queries_path, :class => 'btn btn-default' %>
+
+<% end %>

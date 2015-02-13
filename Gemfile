@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-# gem 'sqlite3'
+gem 'sqlite3'
 gem 'pg', '0.17.1'
 
 # Use SCSS for stylesheets
