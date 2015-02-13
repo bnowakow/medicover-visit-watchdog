@@ -38,6 +38,14 @@ gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 
+gem 'delayed_job_active_record'
+gem 'foreman'
+
+gem 'net'
+gem 'openssl'
+# gem 'uri'
+gem 'json'
+
 group :production do
   gem 'rails_12factor', '0.0.2'
 end

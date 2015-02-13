@@ -69,6 +69,6 @@ class MedicoverApisController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medicover_api_params
-      params.require(:medicover_api).permit(:url, :token, :new_visit_path)
+      params.require(:medicover_api).permit(:url, :token, :new_visit_path, :refresh_token_path)
     end
 end

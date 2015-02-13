@@ -1,3 +1,9 @@
+require 'net/http'
+require 'net/https'
+require 'openssl'
+require 'uri'
+# require 'json/pure'
+
 class MedicoverVisitsWatchdogsController < ApplicationController
   before_action :set_medicover_visits_watchdog, only: [:show, :edit, :update, :destroy]
 
@@ -5,6 +11,46 @@ class MedicoverVisitsWatchdogsController < ApplicationController
   # GET /medicover_visits_watchdogs.json
   def index
     @medicover_visits_watchdogs = MedicoverVisitsWatchdog.all
+    refresh_visits.delay
+  end
+
+  def refresh_visits
+    uri = URI.parse("https://" + MedicoverApi.first.url)
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = true
+
+    @medicover_visits_watchdogs.each do |medicover_visits_watchdog|
+      @toSend = {
+          "regionId" => medicover_visits_watchdog.medicover_visit_query.region,
+          "bookingTypeId" => 2,
+          "specializationId" => 3,
+          "clinicId" => -1,
+          "languageId" => -1,
+          "doctorId" => -1,
+          "searchSince" => "2015-02-13T02:00:00.000Z",
+          "searchForNextSince" => nil,
+          "periodOfTheDay" => 0,
+          "isSetBecauseOfPcc" => false,
+          "isSetBecausePromoteSpecialization" => false
+      }
+
+      req = Net::HTTP::Post.new(MedicoverApi.first.new_visit_path, initheader = {
+                                                                     'X-Requested-With' => 'XMLHttpRequest',
+                                                                     'Content-Type' =>'application/json',
+                                                                     'Cookie' => '.ASPXAUTH=' + "#{MedicoverApi.first.token}" + ';'
+                                                                 })
+      req.body = "#{@toSend.to_json}"
+
+      resp = https.start { |cx| cx.request(req) }
+      respJson = JSON.parse(resp.body)
+      medicover_visits_watchdog.first_possible_appointment_date = respJson['firstPossibleAppointmentDate']
+      medicover_visits_watchdog.save
+    end
+
+    reqRefresh = Net::HTTP::Get.new(MedicoverApi.first.refresh_token_path, initheader = {
+                                                                             'Cookie' => '.ASPXAUTH=' + "#{MedicoverApi.first.token}" + ';'
+                                                                         })
+    respRefresh = https.start { |cx| cx.request(reqRefresh) }
   end
 
   # GET /medicover_visits_watchdogs/1
