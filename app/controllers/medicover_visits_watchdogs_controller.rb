@@ -22,16 +22,16 @@ class MedicoverVisitsWatchdogsController < ApplicationController
     @medicover_visits_watchdogs.each do |medicover_visits_watchdog|
       @toSend = {
           "regionId" => medicover_visits_watchdog.medicover_visit_query.region,
-          "bookingTypeId" => 2,
-          "specializationId" => 3,
-          "clinicId" => -1,
-          "languageId" => -1,
-          "doctorId" => -1,
-          "searchSince" => "2015-02-13T02:00:00.000Z",
-          "searchForNextSince" => nil,
-          "periodOfTheDay" => 0,
-          "isSetBecauseOfPcc" => false,
-          "isSetBecausePromoteSpecialization" => false
+          "bookingTypeId" => medicover_visits_watchdog.medicover_visit_query.booking_type,
+          "specializationId" => medicover_visits_watchdog.medicover_visit_query.specialization,
+          "clinicId" => medicover_visits_watchdog.medicover_visit_query.clinic,
+          "languageId" => medicover_visits_watchdog.medicover_visit_query.language,
+          "doctorId" => medicover_visits_watchdog.medicover_visit_query.doctor,
+          "searchSince" => medicover_visits_watchdog.medicover_visit_query.search_since,
+          "searchForNextSince" => nil, # TODO check if nil
+          "periodOfTheDay" => medicover_visits_watchdog.medicover_visit_query.period_of_the_day,
+          "isSetBecauseOfPcc" => medicover_visits_watchdog.medicover_visit_query.set_because_of_pcc,
+          "isSetBecausePromoteSpecialization" => medicover_visits_watchdog.medicover_visit_query.is_set_because_promote_specialization
       }
 
       req = Net::HTTP::Post.new(MedicoverApi.first.new_visit_path, initheader = {
