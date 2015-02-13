@@ -2,7 +2,8 @@ require 'net/http'
 require 'net/https'
 require 'openssl'
 require 'uri'
-# require 'json/pure'
+
+require 'sendgrid-ruby'
 
 class MedicoverVisitsWatchdogsController < ApplicationController
   before_action :set_medicover_visits_watchdog, only: [:show, :edit, :update, :destroy]
@@ -18,6 +19,8 @@ class MedicoverVisitsWatchdogsController < ApplicationController
     uri = URI.parse("https://" + MedicoverApi.first.url)
     https = Net::HTTP.new(uri.host, uri.port)
     https.use_ssl = true
+
+    mailClient = SendGrid::Client.new(api_user: ENV['SENDGRID_USERNAME'], api_key: ENV['SENDGRID_PASSWORD'])
 
     @medicover_visits_watchdogs.each do |medicover_visits_watchdog|
       @toSend = {
@@ -43,8 +46,26 @@ class MedicoverVisitsWatchdogsController < ApplicationController
 
       resp = https.start { |cx| cx.request(req) }
       respJson = JSON.parse(resp.body)
+      prevDate = medicover_visits_watchdog.first_possible_appointment_date
       medicover_visits_watchdog.first_possible_appointment_date = respJson['firstPossibleAppointmentDate']
-      medicover_visits_watchdog.save
+      if prevDate != medicover_visits_watchdog.first_possible_appointment_date
+        mail = SendGrid::Mail.new do |m|
+          m.to = 'bartek@bnowakowski.pl'
+          m.cc = 'joannaruth1@gmail.com'
+          m.from = 'bartek@bnowakowski.pl'
+          m.subject = '[medicover-visit-watchdog] Alert for your visit query'
+          m.text = "previous first_possible_appointment_date: #{medicover_visits_watchdog.first_possible_appointment_date}\n" \
+                      "current first_possible_appointment_date: #{respJson['firstPossibleAppointmentDate']}\n\n " \
+          if respJson && respJson['items'] && respJson['items'][0]
+              m.text += "specializationName: #{respJson['items'][0]['specializationName']}\n" \
+                        "doctorName: #{respJson['items'][0]['doctorName']}\n" \
+                        "appointmentDate: #{respJson['items'][0]['appointmentDate']}\n" \
+                        "clinicName: #{respJson['items'][0]['clinicName']}\n"
+        end
+
+        mailClient.send(mail)
+        medicover_visits_watchdog.save
+      end
     end
 
     reqRefresh = Net::HTTP::Get.new(MedicoverApi.first.refresh_token_path, initheader = {

@@ -41,8 +41,9 @@ gem 'foreman'
 
 gem 'net'
 gem 'openssl'
-# gem 'uri'
 gem 'json'
+
+gem 'sendgrid-ruby'
 
 group :production do
   gem 'pg', '0.17.1'
