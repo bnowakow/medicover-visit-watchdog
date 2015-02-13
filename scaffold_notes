@@ -1,3 +1,4 @@
 rails g scaffold MedicoverVisitQuery region:integer booking_type:integer specialization:integer clinic:integer language:integer doctor:integer search_since:datetime search_for_next_since:datetime period_of_the_day:integer set_because_of_pcc:boolean is_set_because_promote_specialization:boolean
 rails g scaffold MedicoverApi url:string token:text new_visit_path:string
 rails g bootstrap:themed MedicoverApis -f
+rails g scaffold MedicoverVisitsWatchdog medicover_visit_query:references first_possible_appointment_date:datetime

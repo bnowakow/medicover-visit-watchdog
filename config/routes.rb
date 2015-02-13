@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  resources :medicover_visits_watchdogs
+
   resources :medicover_apis
 
   resources :medicover_visit_queries
+
+  root 'medicover_visits_watchdogs#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

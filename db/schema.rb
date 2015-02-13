@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213014706) do
+ActiveRecord::Schema.define(version: 20150213015211) do
 
   create_table "medicover_apis", force: :cascade do |t|
     t.string   "url"
@@ -37,5 +37,14 @@ ActiveRecord::Schema.define(version: 20150213014706) do
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
+
+  create_table "medicover_visits_watchdogs", force: :cascade do |t|
+    t.integer  "medicover_visit_query_id"
+    t.datetime "first_possible_appointment_date"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "medicover_visits_watchdogs", ["medicover_visit_query_id"], name: "index_medicover_visits_watchdogs_on_medicover_visit_query_id"
 
 end
