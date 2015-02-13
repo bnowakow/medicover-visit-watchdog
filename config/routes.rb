@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :medicover_apis
+
   resources :medicover_visit_queries
 
   # The priority is based upon order of creation: first created -> highest priority.

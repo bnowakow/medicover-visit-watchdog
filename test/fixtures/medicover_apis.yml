@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: 
+  token: MyText
+  new_visit_path: MyString
+
+two:
+  url: 
+  token: MyText
+  new_visit_path: MyString

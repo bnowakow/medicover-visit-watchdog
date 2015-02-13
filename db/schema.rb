@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213012714) do
+ActiveRecord::Schema.define(version: 20150213014706) do
+
+  create_table "medicover_apis", force: :cascade do |t|
+    t.string   "url"
+    t.text     "token"
+    t.string   "new_visit_path"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "refresh_token_path"
+  end
 
   create_table "medicover_visit_queries", force: :cascade do |t|
     t.integer  "region"

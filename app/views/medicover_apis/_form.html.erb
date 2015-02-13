@@ -1,0 +1,52 @@
+<%= form_for @medicover_api, :html => { :class => "form-horizontal medicover_api" } do |f| %>
+
+    <% if @medicover_api.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@medicover_api.errors.count, "error") %> prohibited this medicover_api from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @medicover_api.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :url, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :url, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_api[:url]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :token, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :token, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_api[:token]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :new_visit_path, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :new_visit_path, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_api[:new_visit_path]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :refresh_token_path, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :refresh_token_path, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_api[:refresh_token_path]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            medicover_apis_path, :class => 'btn btn-default' %>
+
+<% end %>

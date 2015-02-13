@@ -1,0 +1,2 @@
+module MedicoverApisHelper
+end
