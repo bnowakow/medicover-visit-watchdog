@@ -16,11 +16,9 @@ class MedicoverVisitsWatchdogsController < ApplicationController
   end
 
   def refresh_visits
-    # TODO fixme iterate throught avalible apis (user endpoints)
+    # TODO fixme iterate throught avalible apis (user endpoints) and add reference from watchdog to certain api as well
     medicover_api = MedicoverApi.first
-    uri = URI.parse("https://" + medicover_api.url)
-    https = Net::HTTP.new(uri.host, uri.port)
-    https.use_ssl = true
+
 
     mailClient = SendGrid::Client.new(api_user: ENV['SENDGRID_USERNAME'], api_key: ENV['SENDGRID_PASSWORD'])
 
@@ -46,45 +44,31 @@ class MedicoverVisitsWatchdogsController < ApplicationController
                                                                  })
       req.body = "#{@toSend.to_json}"
 
-      resp = https.start { |cx| cx.request(req) }
-      respJson = JSON.parse(resp.body)
-      prevDate = medicover_visits_watchdog.first_possible_appointment_date
-      medicover_visits_watchdog.first_possible_appointment_date = respJson['firstPossibleAppointmentDate']
+      resp = medicover_api.post(req)
+      if resp
+        respJson = JSON.parse(resp.body)
+        prevDate = medicover_visits_watchdog.first_possible_appointment_date
+        medicover_visits_watchdog.first_possible_appointment_date = respJson['firstPossibleAppointmentDate']
 
-      if !respJson || !respJson['items'] || !respJson['items'][0]
-        # api token has expired - duh they return wrong data, not proper token expire message ~.~
-        # TODO move to method and do proper retry with count, workaround for now, next call will pass
-        reqRefresh = Net::HTTP::Post.new(medicover_api.refresh_token_path, initheader = {
-                                                                             'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                                                                             'Content-Type' =>'application/x-www-form-urlencoded'
-                                                                         })
-        respRefresh = https.start { |cx| cx.request(reqRefresh) }
-        # TODO REPLACE THAT WITH LOGIN AND PASSWORD VARIABLES!
-        reqRefresh.body = "userNameOrEmail=#{medicover_api.username}&password=#{medicover_api.password}"
-        respRefresh = https.start { |cx| cx.request(reqRefresh) }
-        token = respRefresh['set-cookie'].match(/\.ASPXAUTH=([^;]+).*$/)[1]
-        medicover_api.token = token
-        medicover_api.save
-      end
+        if prevDate != medicover_visits_watchdog.first_possible_appointment_date
+          mail = SendGrid::Mail.new do |m|
+            m.to = 'bartek@bnowakowski.pl'
+            m.cc = 'joannaruth1@gmail.com'
+            m.from = 'bartek@bnowakowski.pl'
+            m.subject = '[medicover-visit-watchdog] Alert for your visit query'
+            m.text = "previous first_possible_appointment_date: #{medicover_visits_watchdog.first_possible_appointment_date}\n" \
+                        "current first_possible_appointment_date: #{respJson['firstPossibleAppointmentDate']}\n\n "
+            if respJson && respJson['items'] && respJson['items'][0]
+                m.text += "specializationName: #{respJson['items'][0]['specializationName']}\n" \
+                          "doctorName: #{respJson['items'][0]['doctorName']}\n" \
+                          "appointmentDate: #{respJson['items'][0]['appointmentDate']}\n" \
+                          "clinicName: #{respJson['items'][0]['clinicName']}\n"
+              end
+          end
 
-      if prevDate != medicover_visits_watchdog.first_possible_appointment_date
-        mail = SendGrid::Mail.new do |m|
-          m.to = 'bartek@bnowakowski.pl'
-          m.cc = 'joannaruth1@gmail.com'
-          m.from = 'bartek@bnowakowski.pl'
-          m.subject = '[medicover-visit-watchdog] Alert for your visit query'
-          m.text = "previous first_possible_appointment_date: #{medicover_visits_watchdog.first_possible_appointment_date}\n" \
-                      "current first_possible_appointment_date: #{respJson['firstPossibleAppointmentDate']}\n\n "
-          if respJson && respJson['items'] && respJson['items'][0]
-              m.text += "specializationName: #{respJson['items'][0]['specializationName']}\n" \
-                        "doctorName: #{respJson['items'][0]['doctorName']}\n" \
-                        "appointmentDate: #{respJson['items'][0]['appointmentDate']}\n" \
-                        "clinicName: #{respJson['items'][0]['clinicName']}\n"
-            end
+          mailClient.send(mail)
+          medicover_visits_watchdog.save
         end
-
-        mailClient.send(mail)
-        medicover_visits_watchdog.save
       end
     end
   end
