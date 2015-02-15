@@ -43,6 +43,20 @@
     </div>
     <%= error_span(@medicover_api[:refresh_token_path]) %>
   </div>
+  <div class="control-group">
+    <%= f.label :username, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :username, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_api[:username]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :password, :class => 'form-control' %>
+    </div>
+    <%= error_span(@medicover_api[:password]) %>
+  </div>
 
 
   <%= f.submit nil, :class => 'btn btn-primary' %>

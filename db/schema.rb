@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213020345) do
+ActiveRecord::Schema.define(version: 20150215023654) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20150213020345) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "refresh_token_path"
+    t.string   "username"
+    t.string   "password"
   end
 
   create_table "medicover_visit_queries", force: :cascade do |t|

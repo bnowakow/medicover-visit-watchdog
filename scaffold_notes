@@ -2,3 +2,5 @@ rails g scaffold MedicoverVisitQuery region:integer booking_type:integer special
 rails g scaffold MedicoverApi url:string token:text new_visit_path:string
 rails g bootstrap:themed MedicoverApis -f
 rails g scaffold MedicoverVisitsWatchdog medicover_visit_query:references first_possible_appointment_date:datetime
+rails g migration addUsernameAndPasswordToMedicoverApis username:string password:string
+rails g bootstrap:themed MedicoverApis -f

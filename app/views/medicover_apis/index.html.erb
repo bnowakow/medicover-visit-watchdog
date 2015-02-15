@@ -10,6 +10,8 @@
       <th><%= model_class.human_attribute_name(:token) %></th>
       <th><%= model_class.human_attribute_name(:new_visit_path) %></th>
       <th><%= model_class.human_attribute_name(:refresh_token_path) %></th>
+      <th><%= model_class.human_attribute_name(:username) %></th>
+      <th><%= model_class.human_attribute_name(:password) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -22,6 +24,8 @@
         <td><%= medicover_api.token %></td>
         <td><%= medicover_api.new_visit_path %></td>
         <td><%= medicover_api.refresh_token_path %></td>
+        <td><%= medicover_api.username %></td>
+        <td><%= medicover_api.password %></td>
         <td><%=l medicover_api.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

@@ -12,6 +12,10 @@
   <dd><%= @medicover_api.new_visit_path %></dd>
   <dt><strong><%= model_class.human_attribute_name(:refresh_token_path) %>:</strong></dt>
   <dd><%= @medicover_api.refresh_token_path %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:username) %>:</strong></dt>
+  <dd><%= @medicover_api.username %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:password) %>:</strong></dt>
+  <dd><%= @medicover_api.password %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
