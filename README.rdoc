@@ -1,28 +1,36 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+= Sample deployment on heroku
 
-Things you may want to cover:
+If you want to try this app it would be easiest to deploy it on Heroku (you wouldn't be required to install Ruby and Rails dependencies, configure AS etc). Once you've installed Heroku toolbelt (CLI command) and created Heroku application you need to:
+git push heroku
+heroku run rake db:migrate
+heroku open
 
-* Ruby version
+= Configuring app
 
-* System dependencies
+Go to: /medicover_apis/new, you can find standard values (as of date of writing this Readme) below:
+* Url = mol.medicover.pl
+* New visit path = /api/MyVisits/SearchFreeSlotsToBook?language=pl-PL
+* Refresh token path = /Users/Account/LogOn
+One should also fill Username and Password which will be used to log in to medical care provider (via HTTPS) and obtain and use further a token.
 
-* Configuration
+= Add appointment watchdog
 
-* Database creation
+Go to: /medicover_visit_queries/new you can find standard values (as of date of writing this Readme) below:
+* Booking type = 200
+* Language = -1
+* Doctor = -1
+* Period of the day = 0
+* Set because of pcc = f
+* Is set because promote specialization = f
+Values of rest fields (which list you can find below) should be looked up on https://mol.medicover.pl as one need to pick type of visit or localisation.
+* Region (localisation)
+* Specialization (type of visit)
+* Clinic (particular clinic in given localisation)
+* Search since (date from which visits will be searched)
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+Go to: medicover_visits_watchdogs/new and pick query that you've just created.
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
