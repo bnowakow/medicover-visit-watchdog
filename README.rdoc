@@ -1,6 +1,5 @@
 == README
-
-= Configure 
+Simple watchdog for service https://medicover.pl enabling monitoring if medical appoitment visit of defined type has appeared in the system. You can read about it under: http://bnowakowski.pl/proof-of-concept-for-scheduling-a-medical-appointment-automatically/
 
 = Sample deployment on heroku
 
@@ -26,7 +25,7 @@ Go to: /medicover_visit_queries/new you can find standard values (as of date of 
 * Period of the day = 0
 * Set because of pcc = f
 * Is set because promote specialization = f
-Values of rest fields (which list you can find below) should be looked up on https://mol.medicover.pl as one need to pick type of visit or localisation.
+Values of rest fields (which list you can find below) should be looked up on https://mol.medicover.pl (via Firebug, Charles etc) as one need to pick type of visit or localisation.
 * Region (localisation)
 * Specialization (type of visit)
 * Clinic (particular clinic in given localisation)
