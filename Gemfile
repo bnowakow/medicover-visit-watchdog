@@ -40,7 +40,7 @@ gem 'delayed_job_active_record'
 gem 'foreman'
 
 gem 'net'
-gem 'openssl'
+# gem 'openssl'
 gem 'json'
 
 gem 'sendgrid-ruby'
