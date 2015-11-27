@@ -14,7 +14,7 @@ Go to: /medicover_apis/new, you can find standard values (as of date of writing 
 * Url = mol.medicover.pl
 * New visit path = /api/MyVisits/SearchFreeSlotsToBook?language=pl-PL
 * Refresh token path = /Users/Account/LogOn
-One should also fill Username and Password which will be used to log in to medical care provider (via HTTPS) and obtain and use further a token.
+One should also fill Username and Password which will be used to log in to medical care provider (via HTTPS) and obtain and use further a token. Please keep in mind that if you deploy on Heroku you shoulnd't put your credentials in to the wild. In such case you should sniff your token while logging to Medicover and upload it to an app (please keep in mind it's expiry date so you can't be too slow with this).
 
 = Add appointment watchdog
 
