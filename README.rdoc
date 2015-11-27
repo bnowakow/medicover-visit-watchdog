@@ -1,11 +1,13 @@
 == README
 
+= Configure 
+
 = Sample deployment on heroku
 
 If you want to try this app it would be easiest to deploy it on Heroku (you wouldn't be required to install Ruby and Rails dependencies, configure AS etc). Once you've installed Heroku toolbelt (CLI command) and created Heroku application you need to:
-git push heroku
+<tt>git push heroku
 heroku run rake db:migrate
-heroku open
+heroku open</tt>
 
 = Configuring app
 
@@ -30,7 +32,4 @@ Values of rest fields (which list you can find below) should be looked up on htt
 * Clinic (particular clinic in given localisation)
 * Search since (date from which visits will be searched)
 
-Go to: medicover_visits_watchdogs/new and pick query that you've just created.
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Go to: medicover_visits_watchdogs/new and pick query that you've just created. Please be advised that mail notification configuration is currently hardcoded in <tt>medicover_visits_watchdogs_controller.rb</tt> in method <tt>refresh_visits</tt>. Once you've done above you can add to your cron line like: <tt>00    *               *               *               *               curl https://REPLACE-WITH-YOUR-APP-NAME.herokuapp.com/</tt>
