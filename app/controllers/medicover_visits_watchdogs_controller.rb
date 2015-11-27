@@ -52,9 +52,9 @@ class MedicoverVisitsWatchdogsController < ApplicationController
 
         if prevDate != medicover_visits_watchdog.first_possible_appointment_date
           mail = SendGrid::Mail.new do |m|
-            m.to = 'bartek@bnowakowski.pl'
-            m.cc = 'joannaruth1@gmail.com'
-            m.from = 'bartek@bnowakowski.pl'
+            m.to = ''
+            m.cc = ''
+            m.from = ''
             m.subject = '[medicover-visit-watchdog] Alert for your visit query'
             m.text = "previous first_possible_appointment_date: #{medicover_visits_watchdog.first_possible_appointment_date}\n" \
                         "current first_possible_appointment_date: #{respJson['firstPossibleAppointmentDate']}\n\n "
